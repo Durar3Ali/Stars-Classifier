@@ -1,8 +1,8 @@
-# ⭐ Stars Classifier
+# Stars Classifier
 
 A machine learning project for classifying stars into different types using multiple classification algorithms. This project includes both a Streamlit web application for interactive predictions and standalone scripts for training individual models.
 
-## 🌟 Features
+## Features
 
 - **Interactive Web Application**: Streamlit-based UI for testing star classifications
 - **Multiple Classifiers**: Compare predictions from three different algorithms:
@@ -17,12 +17,12 @@ A machine learning project for classifying stars into different types using mult
   - Super Giants (4)
   - Hyper Giants (5)
 
-## 📋 Requirements
+## Requirements
 
 - Python 3.7+
 - See `requirements.txt` for all dependencies
 
-## 🚀 Installation
+## Installation
 
 1. Clone the repository:
 ```bash
@@ -35,7 +35,7 @@ cd Stars-Classifier
 pip install -r requirements.txt
 ```
 
-## 💻 Usage
+## Usage
 
 ### Web Application
 
@@ -75,7 +75,7 @@ Each script will:
 - Evaluate on test data
 - Display accuracy and confusion matrix
 
-## 📊 Dataset
+## Dataset
 
 The project uses `Stars.csv` which contains the following features:
 - **Temperature** (K): Star temperature in Kelvin
@@ -86,7 +86,7 @@ The project uses `Stars.csv` which contains the following features:
 - **Spectral_Class**: Spectral classification (categorical)
 - **Type**: Star type (target variable)
 
-## 🔧 Model Details
+## Model Details
 
 ### Data Preprocessing
 - Categorical features (Color, Spectral_Class) are encoded using Label Encoding
@@ -98,7 +98,7 @@ The project uses `Stars.csv` which contains the following features:
 - **Decision Tree**: Entropy-based with max depth of 3
 - **KNN**: K-Nearest Neighbors with k=5
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Stars-Classifier/
@@ -111,18 +111,18 @@ Stars-Classifier/
 └── README.md           # This file
 ```
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 - **Streamlit**: Web application framework
 - **scikit-learn**: Machine learning library
 - **pandas**: Data manipulation
 - **numpy**: Numerical computing
 
-## 📝 License
+## License
 
 This project is open source and available for educational purposes.
 
-## 🤝 Contributing
+## Contributing
 
 Contributions, issues, and feature requests are welcome!
 
