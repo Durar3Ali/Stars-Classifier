@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.preprocessing import StandardScaler
@@ -22,25 +22,26 @@ for col in categorical_cols:
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 
 # build the logistic regression model
-model = LogisticRegression(multi_class="multinomial", max_iter=1000)
-model.fit(X_train, y_train) # train
+model = LogisticRegression(max_iter=2000, multi_class="multinomial")
+
+param_grid = {"C": [0.01, 0.1, 1, 10, 100]}
+
+grid = GridSearchCV(
+  estimator=model, #estimator = model
+  param_grid=param_grid,
+  cv=5,
+  scoring="accuracy",
+)
+
+grid.fit(X_train, y_train)
+best_model = grid.best_estimator_
 
 # evaluate the model
-y_pred = model.predict(X_test)
+y_pred = best_model.predict(X_test)
 
 acc = accuracy_score(y_test, y_pred)
 cm = confusion_matrix(y_test, y_pred)
 
-# build the logistic regression model
-model = LogisticRegression(multi_class="multinomial", max_iter=1000)
-model.fit(X_train, y_train) # train
-
-# evaluate the model
-y_pred = model.predict(X_test)
-
-acc = accuracy_score(y_test, y_pred)*100
-cm = confusion_matrix(y_test, y_pred)
-
-print("Accuracy=", round(acc, 2),'%')
+print("Accuracy=", round(acc*100, 2),'%')
 print("Confusion Matrix=")
 print(cm)

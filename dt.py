@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.preprocessing import StandardScaler
@@ -32,11 +32,27 @@ X_remaining = X.drop(columns=cols_to_scale)
 X = pd.concat([X_scaled_part_df, X_remaining], axis=1) # the X final
 
 #The Decision Tree Model
-model = DecisionTreeClassifier(criterion="entropy", max_depth=3)
-model.fit(X_train, y_train)
+base_model = DecisionTreeClassifier()
+
+param_grid = {
+  "max_depth": [None, 3, 5, 7, 9],
+  "min_samples_split": [2, 4, 6],
+  "criterion": ["gini", "entropy"]
+}
+
+grid = GridSearchCV(
+  estimator=base_model,
+  param_grid=param_grid,
+  cv=5,
+  scoring="accuracy"
+)
+
+grid.fit(X_train, y_train)
+
+best_model = grid.best_estimator_
 
 # evaluate the model
-y_pred = model.predict(X_test)
+y_pred = best_model.predict(X_test)
 
 acc = accuracy_score(y_test, y_pred)
 cm = confusion_matrix(y_test, y_pred)
