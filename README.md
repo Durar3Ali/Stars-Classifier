@@ -4,11 +4,9 @@ A machine learning project for classifying stars into different types using mult
 
 ## Features
 
-- **Interactive Web Application**: Streamlit-based UI for testing star classifications
-- **Multiple Classifiers**: Compare predictions from three different algorithms:
-  - Logistic Regression
-  - Decision Tree
-  - K-Nearest Neighbors (KNN)
+- **Interactive Report UI**: Streamlit interface branded “Stars Classifier Interactive Report” for quick exploratory model analysis.
+- **Smart Metrics Deck**: Each run surfaces Accuracy, cross-validation mean, best hyperparameters, confusion matrix, learning curve, and validation curve in a compact report.
+- **Dropdown Model Switcher**: Generate professional reports for Logistic Regression, KNN, or Decision Tree with a single click.
 - **Star Type Classification**: Classify stars into 6 different types:
   - Red Dwarf (0)
   - Brown Dwarf (1)
@@ -45,10 +43,11 @@ Run the Streamlit app for an interactive classification interface:
 streamlit run app.py
 ```
 
-The application will open in your browser where you can:
-- Input star features (Temperature, Luminosity, Radius, Absolute Magnitude, Color, Spectral Class)
-- Get predictions from all three classifiers simultaneously
-- View confidence scores for each prediction
+Once it opens in your browser you can:
+- Choose **Logistic Regression**, **KNN**, or **Decision Tree** from the dropdown
+- Launch training + hyperparameter search via **Generate Report**
+- Review the automatically generated report (metrics, best params, confusion matrix, learning/validation curves)
+- Iterate quickly to compare model behavior side by side
 
 ### Standalone Scripts
 
@@ -56,7 +55,7 @@ You can also run individual classifier scripts to train and evaluate models:
 
 **Logistic Regression:**
 ```bash
-python logreq.py
+python logreg.py
 ```
 
 **Decision Tree:**
@@ -89,14 +88,16 @@ The project uses `Stars.csv` which contains the following features:
 ## Model Details
 
 ### Data Preprocessing
-- Categorical features (Color, Spectral_Class) are encoded using Label Encoding
-- Numerical features (Temperature, L, R) are scaled using StandardScaler for Decision Tree
-- Data is split 80/20 for training/testing with stratification
+- Uses a `ColumnTransformer` with `StandardScaler` for numeric columns and `OneHotEncoder` for categorical fields
+- 80/20 stratified train/test split with cached dataset loading
+- Pipelines keep preprocessing consistent across models
 
 ### Models
-- **Logistic Regression**: Multinomial logistic regression with 1000 max iterations
-- **Decision Tree**: Entropy-based with max depth of 3
-- **KNN**: K-Nearest Neighbors with k=5
+- **Logistic Regression**: Multinomial with up to 2000 iterations; tuned over regularization strengths
+- **Decision Tree**: Grid-searches criterion, depth, and split sizes to find the best structure
+- **KNN**: Explores neighbor counts and weighting strategies
+
+Each model is evaluated with 5-fold cross-validation (GridSearchCV), and its best performer is used to produce the downstream diagnostics shown in the report.
 
 ## Project Structure
 
